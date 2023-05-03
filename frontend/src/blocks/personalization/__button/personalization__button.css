@@ -1,0 +1,19 @@
+.personalization__button {
+  margin-top: 216px;
+  margin-bottom: 112px;
+  width: 358px;
+  height: 50px;
+  background: #ffffff;
+  border-radius: 2px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #000000;
+}
+
+.personalization__button {
+  cursor: pointer;
+}

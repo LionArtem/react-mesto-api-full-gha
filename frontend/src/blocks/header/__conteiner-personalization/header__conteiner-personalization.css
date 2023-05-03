@@ -1,0 +1,4 @@
+.header__conteiner-personalization{
+    display: flex;
+    flex-direction: row;
+}

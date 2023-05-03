@@ -1,0 +1,17 @@
+.profile__info-li {
+  max-width: 293px;
+  padding: 22px 0px 25px;
+  position: relative;
+  margin: 0px 18px 0px 0px;
+}
+
+@media screen and (max-width: 360px) {
+  .profile__info-li {
+    max-width: 250px;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    padding: 0;
+    margin-right: 10px;
+  }
+}

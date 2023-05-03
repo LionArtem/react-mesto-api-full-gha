@@ -1,0 +1,16 @@
+.personalization__login-button {
+  position: relative;
+  bottom: 80px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #ffffff;
+  margin: 0;
+}
+
+.personalization__login-button:hover {
+  cursor: pointer;
+}
