@@ -51,7 +51,7 @@ class Auth {
 }
 
 const auth = new Auth({
-  baseUrl: 'http://api.mesto.add.nomoredomains.monster',
+  baseUrl: 'https://api.mesto.add.nomoredomains.monster',
 });
 
 export { auth };
