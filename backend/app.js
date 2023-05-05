@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 
 const { errors } = require('celebrate');
@@ -27,30 +28,32 @@ app.get('/crash-test', () => {
 
 app.use(requestLogger);
 
-const listDomen = [
-  'https://api.mesto.add.nomoredomains.monster',
-  'http://api.mesto.add.nomoredomains.monster',
-  'https://mesto.add.nomoredomains.monster',
-  'http://mesto.add.nomoredomains.monster',
-];
+app.use(cors());
 
-app.use((req, res, next) => {
-  const { origin } = req.headers;
-  const { method } = req;
-  const requestHeaders = req.headers['access-control-request-headers'];
-  const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
-  if (listDomen.includes(origin)) {
-    // устанавливаем заголовок, который разрешает браузеру запросы с этого источника
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-  // res.header('Access-Control-Allow-Origin', '*');
-  if (method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-    res.header('Access-Control-Allow-Headers', requestHeaders);
-    return res.end();
-  }
-  next();
-});
+// const listDomen = [
+//   'https://api.mesto.add.nomoredomains.monster',
+//   'http://api.mesto.add.nomoredomains.monster',
+//   'https://mesto.add.nomoredomains.monster',
+//   'http://mesto.add.nomoredomains.monster',
+// ];
+
+// app.use((req, res, next) => {
+// const { origin } = req.headers;
+// const { method } = req;
+// const requestHeaders = req.headers['access-control-request-headers'];
+// const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
+// if (listDomen.includes(origin)) {
+//   // устанавливаем заголовок, который разрешает браузеру запросы с этого источника
+//   res.header('Access-Control-Allow-Origin', origin);
+// }
+//   res.header('Access-Control-Allow-Origin', '*');
+//   if (method === 'OPTIONS') {
+//     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
+//     res.header('Access-Control-Allow-Headers', requestHeaders);
+//     return res.end();
+//   }
+//   next();
+// });
 
 app.use('/', sigRouter);
 
