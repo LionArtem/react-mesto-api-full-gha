@@ -1,8 +1,9 @@
+require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-// const { NODE_ENV, JWT_SECRET } = process.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 const RepeatsEmailError = require('../errors/repeats-email-err');
 const IncorrectErr = require('../errors/incorrect-err');
@@ -57,8 +58,8 @@ const login = (req, res, next) => {
           }
           const token = jwt.sign(
             { _id: user._id },
-            // NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
-            'some-secret-key',
+            NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
+            // 'some-secret-key',
             { expiresIn: '7d' },
           );
           res.send({ token });
