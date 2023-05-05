@@ -28,10 +28,10 @@ app.get('/crash-test', () => {
 app.use(requestLogger);
 
 const listDomen = [
+  'https://api.mesto.add.nomoredomains.monster',
+  'http://api.mesto.add.nomoredomains.monster',
   'https://mesto.add.nomoredomains.monster',
   'http://mesto.add.nomoredomains.monster',
-  'localhost:3000',
-  'http://localhost:3000',
 ];
 
 app.use((req, res, next) => {
