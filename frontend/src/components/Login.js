@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from '../utils/Auth';
 import { useForm } from '../hooks/useForm';
 
-export default function Login({ handleLogin, setEmail }) {
+export default function Login({ handleLogin, setEmail, addInfoLoginPage }) {
   const navigate = useNavigate();
 
   const { values, handleChange, setValues } = useForm({
@@ -23,13 +23,14 @@ export default function Login({ handleLogin, setEmail }) {
       .then((res) => {
         if (res.token) {
           localStorage.setItem('token', res.token);
-          setEmail(email)
+          setEmail(email);
           handleLogin();
           setValues({
             password: '',
             email: '',
           });
           navigate('/main', { replace: true });
+          addInfoLoginPage();
         }
       })
       .catch((err) => console.log(err));

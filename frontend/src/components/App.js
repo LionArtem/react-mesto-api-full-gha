@@ -37,6 +37,7 @@ function App() {
         });
     }
   }, []);
+
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some((i) => (i._id || i) === currentUser._id);
@@ -51,7 +52,6 @@ function App() {
       .catch((err) => {
         // тут ловим ошибку
         console.log(err);
-        alert(`Ошибка: ${err}`);
       });
   }
 
@@ -64,13 +64,12 @@ function App() {
       .catch((err) => {
         // тут ловим ошибку
         console.log(err);
-        alert(`Ошибка: ${err}`);
       });
   }
 
   const [cards, setCards] = React.useState([]);
 
-  React.useEffect(() => {
+  const addInfoLoginPage = () => {
     Promise.all([api.getInitialCards(), api.getUserInfo()])
       .then(([cardsData, userData]) => {
         setCards(cardsData);
@@ -78,8 +77,11 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(`Ошибка: ${err}`);
       });
+  };
+
+  React.useEffect(() => {
+    addInfoLoginPage();
   }, []);
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -90,8 +92,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
     React.useState(false);
 
-  const [infoToolTipText, setInfoToolTipText] =
-    React.useState(false);
+  const [infoToolTipText, setInfoToolTipText] = React.useState(false);
 
   const [selectedCard, setSelectedCard] = React.useState({});
 
@@ -111,7 +112,6 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(`Ошибка: ${err}`);
       });
   };
 
@@ -124,7 +124,6 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(`Ошибка: ${err}`);
       });
   };
 
@@ -137,7 +136,6 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert(`Ошибка: ${err}`);
       });
   };
 
@@ -213,7 +211,11 @@ function App() {
         <Route
           path="/sign-in"
           element={
-            <Login handleLogin={() => handleLogin()} setEmail={setEmail} />
+            <Login
+              handleLogin={() => handleLogin()}
+              setEmail={setEmail}
+              addInfoLoginPage={addInfoLoginPage}
+            />
           }
         />
       </Routes>

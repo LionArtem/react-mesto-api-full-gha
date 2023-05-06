@@ -8,6 +8,12 @@ const regularAvatar = /^((http|https:\/\/.)[a-zA-Z0-9-._~:/?#[\]@!$&'()*+,;=]*\.
 const regularLink = /^(ftp|http|https):\/\/[^ "]+$/;
 const regularEmail = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
 
+const listDomen = [
+  'https://mesto.add.nomoredomains.monster',
+  'http://mesto.add.nomoredomains.monster',
+  'localhost:3001',
+];
+
 module.exports = {
   ERROR__INCORRECT,
   ERROR__NOT__FOUND,
@@ -18,4 +24,5 @@ module.exports = {
   regularAvatar,
   regularLink,
   regularEmail,
+  listDomen,
 };
