@@ -7,7 +7,7 @@ import CurrentUserContext from '../contexts/CurrentUserContext';
 
 function Main(props) {
   const navigate = useNavigate();
-  const { currentUser, cards } = useContext(CurrentUserContext);
+  const { currentUser, cards, setLoggedIn } = useContext(CurrentUserContext);
 
   const { onEditProfile, onAddPlace, onEditAvatar, onCardClick, email } = props;
 
@@ -19,6 +19,7 @@ function Main(props) {
           <p
             onClick={() => {
               localStorage.removeItem('token');
+              setLoggedIn(false);
               navigate('/sign-in', { replace: true });
             }}
             className="header__personalization"

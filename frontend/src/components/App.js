@@ -6,7 +6,7 @@ import Footer from './Footer';
 
 import ImagePopup from './ImagePopup';
 import Main from './Main';
-import { api } from '../utils/Api';
+import { Api } from '../utils/Api';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
@@ -38,22 +38,14 @@ function App() {
     }
   }, []);
 
-  function handleCardLike(card) {
-    // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some((i) => (i._id || i) === currentUser._id);
-    // Отправляем запрос в API и получаем обновлённые данные карточки
-    api
-      .changeLikeCard(!isLiked, card._id)
-      .then((newCard) => {
-        setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
-        );
-      })
-      .catch((err) => {
-        // тут ловим ошибку
-        console.log(err);
-      });
-  }
+  const api = new Api({
+    baseUrl: 'https://api.mesto.add.nomoredomains.monster',
+    //baseUrl: 'http://localhost:3000',
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('token')}`,
+      'Content-Type': 'application/json',
+    },
+  });
 
   function handleCardDelete(card) {
     api
@@ -70,19 +62,37 @@ function App() {
   const [cards, setCards] = React.useState([]);
 
   const addInfoLoginPage = () => {
-    Promise.all([api.getInitialCards(), api.getUserInfo()])
-      .then(([cardsData, userData]) => {
-        setCards(cardsData);
-        setCurrentUser(userData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    loggedIn &&
+      Promise.all([api.getInitialCards(), api.getUserInfo()])
+        .then(([cardsData, userData]) => {
+          setCards(cardsData);
+          setCurrentUser(userData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   };
-
+  
   React.useEffect(() => {
     addInfoLoginPage();
-  }, []);
+  }, [loggedIn]);
+
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some((i) => (i._id || i) === currentUser._id);
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api
+      .changeLikeCard(!isLiked, card._id)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((err) => {
+        // тут ловим ошибку
+        console.log(err);
+      });
+  }
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
@@ -173,6 +183,7 @@ function App() {
         cards,
         setCards,
         handleCardDelete,
+        setLoggedIn,
       }}
     >
       <Routes>
