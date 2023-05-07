@@ -21,8 +21,7 @@ const createCard = (req, res, next) => {
       } else {
         next(err);
       }
-    })
-    .catch(next);
+    });
 };
 
 const getCards = (req, res, next) => {
@@ -77,24 +76,20 @@ const addCardLike = (req, res, next) => {
     { new: true },
   ).populate(['owner'])
     .then((card) => {
-      try {
-        if (card) {
-          res.send(card);
-          return;
-        }
-        throw new NotFoundError('карточка с таким id не найдена');
-      } catch (err) {
-        next(err);
+      if (card) {
+        res.send(card);
+        return;
       }
+      throw new NotFoundError('карточка с таким id не найдена');
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        throw new IncorrectErr('не корректные данные');
+        const error = new IncorrectErr('не корректные данные');
+        next(error);
       } else {
         next(err);
       }
-    })
-    .catch(next);
+    });
 };
 
 const remuveCardLike = (req, res, next) => {
@@ -106,24 +101,20 @@ const remuveCardLike = (req, res, next) => {
     { new: true },
   ).populate(['owner'])
     .then((card) => {
-      try {
-        if (card) {
-          res.send(card);
-          return;
-        }
-        throw new NotFoundError('карточка с таким id не найдена');
-      } catch (err) {
-        next(err);
+      if (card) {
+        res.send(card);
+        return;
       }
+      throw new NotFoundError('карточка с таким id не найдена');
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        throw new IncorrectErr('Карточки с такий id не найденo');
+        const error = new IncorrectErr('Карточки с такий id не найденo');
+        next(error);
       } else {
         next(err);
       }
-    })
-    .catch(next);
+    });
 };
 
 module.exports = {
