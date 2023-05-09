@@ -17,7 +17,8 @@ const createCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        throw new IncorrectErr('Не корректные данные');
+        const error = new IncorrectErr('Не корректные данные');
+        next(error);
       } else {
         next(err);
       }
