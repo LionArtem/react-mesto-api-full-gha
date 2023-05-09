@@ -11,7 +11,6 @@ const regularEmail = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
 const listDomen = [
   'https://mesto.add.nomoredomains.monster',
   'http://mesto.add.nomoredomains.monster',
-  'localhost:3001',
 ];
 
 module.exports = {
